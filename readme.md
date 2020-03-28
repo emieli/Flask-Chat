@@ -23,7 +23,7 @@ We use git to clone this repo to a local folder on your device. Pip is used to d
 	user@server:~/Flask-Chat$ source venv/bin/activate
 	(venv) user@server:~/Flask-Chat$ deactivate # to leave the venv
 ### 4. Install the required python modules inside the venv
-	user@server:~/Flask-Chat$ venv/bin/python3 pip install -r pip-requirements.txt
+	user@server:~/Flask-Chat$ venv/bin/python3 -m pip install -r requirements.txt
 	Successfully installed flask==1.1.1 flask-socketio==4.2.1 eventlet==0.25.1 wtforms==2.2.1
 ### 5. Start the flask server from the venv
 	(venv) user@server:~/Flask-Chat$ venv/bin/python3 app.py
