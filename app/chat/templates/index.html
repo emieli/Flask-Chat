@@ -29,11 +29,6 @@
                 chatbox.scrollTop = chatbox.scrollHeight;
                 return false;
             });
-            socket.on('server_send_users', function(message) {
-                $('#userbox').val(message);
-                chatbox.scrollTop = chatbox.scrollHeight;
-                return false;
-            });
             
             // From browser to server
             $('form#send').submit(function(event) {
