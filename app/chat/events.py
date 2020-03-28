@@ -3,9 +3,6 @@ from threading import Lock
 from flask_socketio import emit, join_room, leave_room, close_room, rooms, disconnect
 from .. import socketio
 
-thread = None
-thread_lock = Lock()
-
 messages = []
 
 @socketio.on('connect', namespace='/test')
