@@ -1,0 +1,4 @@
+flask==1.1.1
+flask-socketio==4.2.1
+eventlet==0.25.1
+wtforms==2.2.1

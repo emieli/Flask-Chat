@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="en" style="height: 100%">
+<head>
+
+    <title>Flask Chat</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS CDN, can also download local version to run-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            namespace = '/test';
+            var socket = io(namespace);
+
+            socket.on('connect', function() {
+                console.log("websocket connected");
+                return false;
+            });
+
+            // From server to browser
+            socket.on('server_send_messages', function(message) {
+                $('#chatbox').val(message);
+                chatbox.scrollTop = chatbox.scrollHeight;
+                return false;
+            });
+            socket.on('server_send_users', function(message) {
+                $('#userbox').val(message);
+                chatbox.scrollTop = chatbox.scrollHeight;
+                return false;
+            });
+            
+            // From browser to server
+            $('form#send').submit(function(event) {
+                socket.emit('client_send_message', {data: $('#message').val()});
+                $('#message').val("");
+                return false;
+            });
+        });
+    </script>
+</head>
+<body class="bg-dark">
+    <div class="container">
+        <div class="col-sm-12">
+            <h1 class="text-white text-center">Flask Chat</h1>
+            <form id="send" method="GET" action='#'>
+                <div class="input-group">
+                    <textarea class="form-control mb-3" id="chatbox" rows="16"></textarea>
+                </div>
+                <input class="form-control" type="text" name="message" id="message" placeholder="Message" autocomplete="off">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
