@@ -32,7 +32,6 @@
             });
             socket.on('server_send_user_list', function(users) {
                 $('#userbox').val(users);
-                chatbox.scrollTop = chatbox.scrollHeight;
             });
             
             // From browser to server
