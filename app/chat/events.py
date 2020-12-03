@@ -2,11 +2,8 @@ from flask import session, request, copy_current_request_context
 from threading import Lock
 from flask_socketio import emit, join_room, leave_room, close_room, rooms, disconnect
 from .. import socketio
-import re
-user_command = re.compile('^/(\S+) ?(.*)$')
 
 messages = []
-users = []
 
 @socketio.on('connect')
 def on_connect():
