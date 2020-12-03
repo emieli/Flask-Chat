@@ -23,7 +23,7 @@ def on_disconnect():
     emit('server_send_message', new_message, broadcast=True)
 
     users.remove(session['username'])
-    emit('server_user_list', "\n".join(users), broadcast=True)
+    emit('server_send_user_list', "\n".join(users), broadcast=True)
     return
 
 @socketio.on('client_send_message')
