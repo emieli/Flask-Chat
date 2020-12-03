@@ -30,6 +30,10 @@
                 $('#chatbox').val($('#chatbox').val() + "\n" + message);
                 chatbox.scrollTop = chatbox.scrollHeight;
             });
+            socket.on('server_send_user_list', function(users) {
+                $('#userbox').val(users);
+                chatbox.scrollTop = chatbox.scrollHeight;
+            });
             
             // From browser to server
             $('form#send').submit(function(event) {
@@ -42,15 +46,20 @@
 </head>
 <body class="bg-dark">
     <div class="container">
-        <div class="col-sm-12">
-            <h1 class="text-white text-center">Flask Chat</h1>
-            <form id="send" method="GET" action='#'>
-                <div class="input-group">
-                    <textarea class="form-control mb-3" id="chatbox" rows="16">If you can read this, enable javascript or websocket functionality.</textarea>
-                </div>
-                <input class="form-control" type="text" name="message" id="message" placeholder="Message" autocomplete="off">
-            </form>
-        </div>
+        <h1 class="text-white text-center">Flask Chat</h1>
+        <div class="row">
+            <div class="col-sm-10" style="padding-right: 0;">
+                <form id="send" method="GET" action='#'>
+                    <div class="input-group">
+                        <textarea class="form-control mb-3" id="chatbox" rows="16">If you can read this, enable javascript or websocket functionality.</textarea>
+                    </div>
+                    <input class="form-control" type="text" name="message" id="message" placeholder="Message" autocomplete="off">
+                </form>
+            </div>
+            <div class="col-sm-2">
+                <textarea class="form-control mb-3" id="userbox" rows="16" readonly></textarea>
+            </div>
+        <div class="row">
     </div>
 </body>
 </html>
