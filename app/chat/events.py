@@ -2,23 +2,27 @@ from flask import session, request, copy_current_request_context
 from threading import Lock
 from flask_socketio import emit, join_room, leave_room, close_room, rooms, disconnect
 from .. import socketio
+import re
+user_command = re.compile('^/(\S+) ?(.*)$')
 
 messages = []
+users = []
 
-@socketio.on('connect', namespace='/test')
+@socketio.on('connect')
 def on_connect():
-    new_message = "{} joined the chat.".format(session['username'])
+    new_message = f"{session['username']} joined the chat."
     messages.append(new_message)
-    emit('server_send_messages', "\n".join(messages), broadcast=True)
+    emit('server_send_all_messages', "\n".join(messages), broadcast=True)
+    return
 
-@socketio.on('disconnect', namespace='/test')
+@socketio.on('disconnect')
 def on_disconnect():
-    new_message = "{} has left the chat.".format(session['username'])
+    new_message = f"{session['username']} has left the chat."
     messages.append(new_message)
-    emit('server_send_messages', "\n".join(messages), broadcast=True)
+    emit('server_send_message', new_message, broadcast=True)
 
-@socketio.on('client_send_message', namespace='/test')
+@socketio.on('client_send_message')
 def send(message):
-    new_message = "{}: {}".format(session['username'], message['data'])
+    new_message = f"{session['username']}: {message}"
     messages.append(new_message)
-    emit('server_send_messages', "\n".join(messages), broadcast=True)
+    emit('server_send_message', new_message, broadcast=True)
